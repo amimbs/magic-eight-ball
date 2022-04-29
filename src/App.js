@@ -6,39 +6,39 @@ import { useState } from 'react';
 
 function App() {
 
-  const [answer, setAnswer] = useState('What Is Your Question?') 
-
-  let updateAnswer = (value) => {
-    setAnswer(answer + value)
-  }
+  const [answer, setAnswer] = useState('')
 
   let fetchAnswer = (question) => {
     let uri = "https://8ball.delegator.com/magic/JSON/" + question;
     fetch(uri)
-        .then(response => response.json())
-        .then(json => {
-          //need to set this on the state to then pass in to the component to display
-            // console.log(json.magic.answer);
-            let answer = json.magic.answer
-            console.log(answer)
-        });
-};
+      .then(response => response.json())
+      .then(json => {
+        //need to set this on the state to then pass in to the component to display
+        // console.log(json.magic.answer);
+        let newAnswer = json.magic.answer
+        let updateAnswer = (value) => {
+          setAnswer(answer + newAnswer)
+        }
+        setAnswer(answer + newAnswer)
+        updateAnswer()
+      });
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        
+
         <div>
-          <Eightball answer={answer}/>
+          <Eightball answer={answer} />
         </div>
 
-        <br/>
+        <br />
         <p>
           {answer}
         </p>
 
         <div>
-          <QuestionForm submitquestion={fetchAnswer}/>
+          <QuestionForm submitquestion={fetchAnswer} />
         </div>
       </header>
     </div>

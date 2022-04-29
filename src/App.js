@@ -1,22 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import Eightball from './components/8ball';
+import QuestionForm from './components/questionForm';
+import { useState } from 'react';
+
 
 function App() {
+
+  const [answer, setAnswer] = useState('What Is Your Question?') 
+
+  let updateAnswer = (value) => {
+    setAnswer(answer + value)
+  }
+
+  let fetchAnswer = (question) => {
+    let uri = "https://8ball.delegator.com/magic/JSON/" + question;
+    fetch(uri)
+        .then(response => response.json())
+        .then(json => {
+          //need to set this on the state to then pass in to the component to display
+            // console.log(json.magic.answer);
+            let answer = json.magic.answer
+            console.log(answer)
+        });
+};
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        
+        <div>
+          <Eightball answer={answer}/>
+        </div>
+
+        <br/>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {answer}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <div>
+          <QuestionForm submitquestion={fetchAnswer}/>
+        </div>
       </header>
     </div>
   );

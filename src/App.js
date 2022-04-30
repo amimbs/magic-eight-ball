@@ -13,14 +13,8 @@ function App() {
     fetch(uri)
       .then(response => response.json())
       .then(json => {
-        //need to set this on the state to then pass in to the component to display
-        // console.log(json.magic.answer);
         let newAnswer = json.magic.answer
-        let updateAnswer = (value) => {
-          setAnswer(answer + newAnswer)
-        }
-        setAnswer(answer + newAnswer)
-        updateAnswer()
+        setAnswer(newAnswer)
       });
   };
 
@@ -31,12 +25,7 @@ function App() {
         <div>
           <Eightball answer={answer} />
         </div>
-
         <br />
-        <p>
-          {answer}
-        </p>
-
         <div>
           <QuestionForm submitquestion={fetchAnswer} />
         </div>
